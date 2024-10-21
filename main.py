@@ -27,10 +27,17 @@ def actualizar_producto():
     nombre_producto = input("Introduce el nombre del producto que quieres actualizar: ")
     for producto in productos:
         if producto['nombre'] == nombre_producto:
+            nuevo_nombre = input(f"Introduce el nuevo nombre (o presiona Enter para mantener '{nombre_producto}'): ")
+            if nuevo_nombre:
+                producto['nombre'] = nuevo_nombre
             while True:
                 try:
-                    producto['precio'] = float(input(f"Introduce el nuevo precio de {nombre_producto}: "))
-                    producto['cantidad'] = int(input(f"Introduce la nueva cantidad de {nombre_producto}: "))
+                    nuevo_precio = input(f"Introduce el nuevo precio (o presiona Enter para mantener '{producto['precio']}'): ")
+                    if nuevo_precio:
+                        producto['precio'] = float(nuevo_precio)
+                    nueva_cantidad = input(f"Introduce la nueva cantidad (o presiona Enter para mantener '{producto['cantidad']}'): ")
+                    if nueva_cantidad:
+                        producto['cantidad'] = int(nueva_cantidad)
                     print(f"Producto '{nombre_producto}' actualizado correctamente.")
                     break
                 except ValueError:
@@ -64,10 +71,12 @@ def cargar_datos():
                     'precio': float(precio),
                     'cantidad': int(cantidad)
                 })
+        print("Datos cargados correctamente.")
     except FileNotFoundError:
         print("Archivo de productos no encontrado, iniciando con lista vacía.")
 
 def menu():
+    cargar_datos()  # Cargar los productos al inicio
     while True:
         print("1: Añadir producto")
         print("2: Ver productos")
@@ -90,5 +99,5 @@ def menu():
             break
         else:
             print("Por favor, selecciona una opción válida.")
-            
+
 menu()
